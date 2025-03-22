@@ -9,7 +9,7 @@ version = "0.0.1-SNAPSHOT"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
+		languageVersion.set(JavaLanguageVersion.of(17))
 	}
 }
 
@@ -17,7 +17,8 @@ repositories {
 	mavenCentral()
 }
 
-extra["springCloudVersion"] = "2024.0.0"
+var springCloudVersion: String by extra
+springCloudVersion = "2024.0.0"
 
 dependencies {
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
@@ -28,10 +29,11 @@ dependencies {
 
 dependencyManagement {
 	imports {
-		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
 	}
 }
 
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
